@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import dill
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 from src.exception import CustomException
 
@@ -18,11 +19,17 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e)
 
-def evaluate_model(x_train, y_train, x_test, y_test, models):
+def evaluate_model(x_train, y_train, x_test, y_test, models,):
     try:
         report = {}
         for i in range(len(list(models))):
             model = list(models.values())[i]
+            # tuning
+            # para = param[list(models.keys())[i]]
+
+            # gs = GridSearchCV(model, para, cv=3)
+            # gs.fit(x_train, y_train)
+            # model.set_params(**gs.best_params_)
 
             # train model
             model.fit(x_train, y_train)
@@ -38,5 +45,13 @@ def evaluate_model(x_train, y_train, x_test, y_test, models):
 
         return report
     
+    except Exception as e:
+        raise CustomException(e)
+    
+def load_object(file_path):
+    try:
+        with open(file_path, 'rb') as file_obj:
+            return dill.load(file_obj)
+     
     except Exception as e:
         raise CustomException(e)

@@ -44,7 +44,11 @@ class ModelTrainer:
                 'AdaBoost Classifier': AdaBoostRegressor()
             }
 
-            model_report = evaluate_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, models=models)
+            # tuning
+            #params = {}
+
+            model_report = evaluate_model(x_train=x_train, y_train=y_train, 
+                                          x_test=x_test, y_test=y_test, models=models, )
 
             # to get best model score from dict
             best_model_score = max(sorted(model_report.values()))
